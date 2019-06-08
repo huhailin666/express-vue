@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var ejs = require('ejs')
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var api = require('./routes/api');
 
 var app = express();
 
@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api', api);  //所有以api开头的请求，都交给api去处理
 //测试路由
 app.use('/haha',function(req,res,next){
   res.send('haha')

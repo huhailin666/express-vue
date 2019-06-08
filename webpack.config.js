@@ -1,9 +1,9 @@
 var path=require('path')
-
+const webpack=require('webpack')
 module.exports={
-  entry: path.join(__dirname,"main.js"),
+  entry: path.join(__dirname,"./src/main.js"),
   output: {
-    path:path.join(__dirname,"../public"),
+    path:path.join(__dirname,"./public"),
     filename:"index.js"
   },
   module: {
@@ -18,5 +18,4 @@ module.exports={
       'vue$': 'vue/dist/vue.esm.js'
     }
   }
-
 }
