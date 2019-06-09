@@ -18540,6 +18540,16 @@ exports.default = {
     toChangeUnfinish: function toChangeUnfinish(id) {
       var _this = this;
 
+      _jquery2.default.post("/api/notes/edit", {
+        id: id,
+        isFinish: false
+      }).done(function (ret) {
+        if (ret.status === 0) {
+          (0, _toast2.default)("更新成功");
+        } else {
+          (0, _toast2.default)("更新失败");
+        }
+      });
       this.lists.forEach(function (e) {
         if (e.id == id) {
           _this.$set(e, "isFinish", false);
@@ -18549,6 +18559,16 @@ exports.default = {
     toChangeFinish: function toChangeFinish(id) {
       var _this2 = this;
 
+      _jquery2.default.post("/api/notes/edit", {
+        id: id,
+        isFinish: true
+      }).done(function (ret) {
+        if (ret.status === 0) {
+          (0, _toast2.default)("更新成功");
+        } else {
+          (0, _toast2.default)("更新失败");
+        }
+      });
       this.lists.forEach(function (e) {
         if (e.id == id) {
           _this2.$set(e, "isFinish", true);
@@ -18558,53 +18578,71 @@ exports.default = {
     changeStar: function changeStar(id, i) {
       var _this3 = this;
 
-      //在此处发送修改请求
+      _jquery2.default.post("/api/notes/edit", {
+        id: id,
+        level: i
+      }).done(function (ret) {
+        if (ret.status === 0) {
+          (0, _toast2.default)("更新成功");
+        } else {
+          (0, _toast2.default)("更新失败");
+        }
+      });
       this.lists.forEach(function (e) {
         if (e.id == id) {
           _this3.$set(e, "level", i);
         }
       });
     },
-    toAll: function toAll() {
-      this.select = 0;
-    },
-    toUnfinish: function toUnfinish() {
-      this.select = 1;
-    },
-    toFinished: function toFinished() {
-      this.select = 2;
-    },
-    fanhui: function fanhui() {
+    fanhui: function fanhui(o) {
+      var _this4 = this;
+
       this.isAdd = false;
+      if (o) {
+        _jquery2.default.post("api/notes/add", o).done(function (ret) {
+          if (ret.status === 0) {
+            console.log(ret);
+            _this4.lists.push(ret.data);
+            (0, _toast2.default)('添加成功');
+          } else {
+            (0, _toast2.default)("添加失败");
+          }
+        });
+      }
     },
-    update: function update(el, i) {
-      console.log(el.target.innerText);
-      // let text = this.lists[i].text
-      // let id =this.lists[i].id
-      // $.post("/api/notes/edit", {
-      //   id: id,
-      //   note: text
-      // }).done(function(ret) {
-      //   if (ret.status === 0) {
-      //     Toast("更新成功");
-      //   } else {
-      //     Toast("更新失败");
-      //   }
-      // });
+    update: function update(el, id) {
+      var _this5 = this;
+
+      console.log(id);
+      var text = el.target.innerText;
+      this.lists.forEach(function (e) {
+        if (e.id == id) {
+          _this5.$set(e, "text", text);
+        }
+      });
+      _jquery2.default.post("/api/notes/edit", {
+        id: id,
+        note: text
+      }).done(function (ret) {
+        if (ret.status === 0) {
+          (0, _toast2.default)("更新成功");
+        } else {
+          (0, _toast2.default)("更新失败");
+        }
+      });
     },
     add: function add() {
       this.isAdd = true;
     },
     close: function close(id) {
-      var _this4 = this;
+      var _this6 = this;
 
-      // let id =this.lists[i].id;
       _jquery2.default.post("/api/notes/delete", { id: id }).done(function (ret) {
         if (ret.status === 0) {
-          _this4.lists.forEach(function (e, index) {
+          _this6.lists.forEach(function (e, index) {
             //根据 id 找元素，找到后删除
             if (e.id == id) {
-              _this4.lists.splice(index, 1);
+              _this6.lists.splice(index, 1);
             }
           });
           (0, _toast2.default)("删除成功");
@@ -18614,11 +18652,11 @@ exports.default = {
       });
     },
     getNote: function getNote() {
-      var _this5 = this;
+      var _this7 = this;
 
       _jquery2.default.get("/api/notes").done(function (ret) {
         if (ret.status == 0) {
-          _this5.lists = ret.data;
+          _this7.lists = ret.data;
         }
       });
     }
@@ -18691,6 +18729,8 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
 
 exports.default = {
   data: function data() {
@@ -18702,25 +18742,16 @@ exports.default = {
   },
   methods: {
     close: function close() {
-      this.$emit('func');
+      this.$emit("func");
     },
     add: function add() {
-      this.$emit('func');
-
-      // let o = {
-      //   name: "xiaoyu",
-      //   text: "请输入",
-      //   isFinish: false,
-      //   createdAt: new Date(),
-      //   level: 1
-      // };
-      // this.lists.push(o);
-      // $.post("/api/notes/add", {}).done(ret => {
-      //   if (ret.status === 0) {
-      //     Toast("添加成功");
-      //     this.$set(this.lists[this.lists.length - 1], "id", ret.id);
-      //   }
-      // });
+      var text = document.querySelector("textarea").value;
+      var o = {
+        text: text,
+        level: this.level,
+        username: "小鱼"
+      };
+      this.$emit("func", o);
     }
   }
 };
@@ -42721,7 +42752,16 @@ var render = function() {
           _vm._l(5, function(i) {
             return _c(
               "svg",
-              { key: i, staticClass: "icon", attrs: { "aria-hidden": "true" } },
+              {
+                key: i,
+                staticClass: "icon",
+                attrs: { "aria-hidden": "true" },
+                on: {
+                  click: function($event) {
+                    _vm.level = i
+                  }
+                }
+              },
               [
                 i <= _vm.level
                   ? _c("use", { attrs: { "xlink:href": "#icon-Starlarge" } })
@@ -42791,7 +42831,11 @@ var render = function() {
             {
               staticClass: "all",
               class: [_vm.select == 0 ? "active" : ""],
-              on: { click: _vm.toAll }
+              on: {
+                click: function($event) {
+                  _vm.select = 0
+                }
+              }
             },
             [_vm._v("全部")]
           ),
@@ -42801,7 +42845,11 @@ var render = function() {
             {
               staticClass: "unFinish",
               class: [_vm.select == 1 ? "active" : ""],
-              on: { click: _vm.toUnfinish }
+              on: {
+                click: function($event) {
+                  _vm.select = 1
+                }
+              }
             },
             [_vm._v("未完成")]
           ),
@@ -42811,7 +42859,11 @@ var render = function() {
             {
               staticClass: "finished",
               class: [_vm.select == 2 ? "active" : ""],
-              on: { click: _vm.toFinished }
+              on: {
+                click: function($event) {
+                  _vm.select = 2
+                }
+              }
             },
             [_vm._v("已完成")]
           )
@@ -42871,7 +42923,7 @@ var render = function() {
                   attrs: { contenteditable: "true" },
                   on: {
                     blur: function($event) {
-                      return _vm.update($event, index)
+                      return _vm.update($event, item.id)
                     }
                   }
                 },

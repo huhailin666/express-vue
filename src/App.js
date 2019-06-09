@@ -29,6 +29,16 @@ export default {
   },
   methods: {
     toChangeUnfinish(id) {
+      $.post("/api/notes/edit", {
+        id: id,
+        isFinish: false
+      }).done((ret)=> {
+        if (ret.status === 0) {
+          Toast("更新成功");
+        } else {
+          Toast("更新失败");
+        }
+      });
       this.lists.forEach(e => {
         if (e.id == id) {
           this.$set(e, "isFinish", false);
@@ -36,6 +46,16 @@ export default {
       });
     },
     toChangeFinish(id) {
+      $.post("/api/notes/edit", {
+        id: id,
+        isFinish: true
+      }).done((ret)=> {
+        if (ret.status === 0) {
+          Toast("更新成功");
+        } else {
+          Toast("更新失败");
+        }
+      });
       this.lists.forEach(e => {
         if (e.id == id) {
           this.$set(e, "isFinish", true);
@@ -43,29 +63,43 @@ export default {
       });
     },
     changeStar(id, i) {
-      //在此处发送修改请求
+      $.post("/api/notes/edit", {
+        id: id,
+        level: i
+      }).done((ret)=> {
+        if (ret.status === 0) {
+          Toast("更新成功");
+        } else {
+          Toast("更新失败");
+        }
+      });
       this.lists.forEach(e => {
         if (e.id == id) {
           this.$set(e, "level", i);
         }
       });
     },
-    toAll() {
-      this.select = 0;
-    },
-    toUnfinish() {
-      this.select = 1;
-    },
-    toFinished() {
-      this.select = 2;
-    },
-    fanhui() {
+    fanhui(o) {
       this.isAdd = false;
+      if(o){
+        $.post("api/notes/add",o).done((ret)=>{
+          if(ret.status===0){
+            this.lists.push(ret.data)
+            Toast('添加成功')
+          } else {
+            Toast("添加失败");
+          }
+        })
+      }
     },
-    update(el, i) {
-      console.log(el.target.innerText);
-      // let text = this.lists[i].text
-      // let id =this.lists[i].id
+    update(el, id) {
+      console.log(id)
+      let text=el.target.innerText;
+      this.lists.forEach(e => {
+        if (e.id == id) {
+          this.$set(e, "text", text);
+        }
+      });
       $.post("/api/notes/edit", {
         id: id,
         note: text
@@ -81,7 +115,6 @@ export default {
       this.isAdd = true;
     },
     close(id) {
-      // let id =this.lists[i].id;
       $.post("/api/notes/delete", { id: id }).done((ret)=> {
         if (ret.status === 0) {
           this.lists.forEach((e,index)=>{//根据 id 找元素，找到后删除

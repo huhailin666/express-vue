@@ -9,13 +9,15 @@
     <div class="footer">
       <p>
         <span>重要星级：</span>
-        <svg class="icon" aria-hidden="true" v-for="i in 5" :key="i">
+        <svg class="icon" aria-hidden="true" v-for="i in 5" :key="i" @click="level=i">
           <use v-if="i<=level" xlink:href="#icon-Starlarge"></use>
           <use v-else xlink:href="#icon-star"></use>
         </svg>
       </p>
     </div>
-    <p class="addNote"><span @click="add">添加</span></p>
+    <p class="addNote">
+      <span @click="add">添加</span>
+    </p>
   </div>
 </template>
   <script>
@@ -24,30 +26,21 @@ export default {
     return {
       note: {},
       text: "",
-      level:1
+      level: 1
     };
   },
   methods: {
-    close(){
-      this.$emit('func')
+    close() {
+      this.$emit("func");
     },
     add() {
-            this.$emit('func')
-
-      // let o = {
-      //   name: "xiaoyu",
-      //   text: "请输入",
-      //   isFinish: false,
-      //   createdAt: new Date(),
-      //   level: 1
-      // };
-      // this.lists.push(o);
-      // $.post("/api/notes/add", {}).done(ret => {
-      //   if (ret.status === 0) {
-      //     Toast("添加成功");
-      //     this.$set(this.lists[this.lists.length - 1], "id", ret.id);
-      //   }
-      // });
+      let text = document.querySelector("textarea").value;
+      let o = {
+        text: text,
+        level: this.level,
+        username:"小鱼"
+      };
+      this.$emit("func", o);
     }
   }
 };

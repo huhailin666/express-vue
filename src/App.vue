@@ -9,9 +9,9 @@
     <div id="header">
       <span class="header-title">Sticky-Note</span>
       <ul class="header-button">
-        <li class="all" :class="[select==0?'active':'']" @click="toAll">全部</li>
-        <li class="unFinish" :class="[select==1?'active':'']" @click="toUnfinish">未完成</li>
-        <li class="finished" :class="[select==2?'active':'']" @click="toFinished">已完成</li>
+        <li class="all" :class="[select==0?'active':'']" @click="select=0">全部</li>
+        <li class="unFinish" :class="[select==1?'active':'']" @click="select=1">未完成</li>
+        <li class="finished" :class="[select==2?'active':'']" @click="select=2">已完成</li>
       </ul>
       <div v-if="isLogin" class="login">
         <img src="https://avatars0.githubusercontent.com/u/44695653?v=4" alt>
@@ -32,7 +32,7 @@
             <span>{{item.username}}说：</span>
             <span class="close" @click="close(item.id)">X</span>
           </div>
-          <div class="text" @blur="update($event,index)" contenteditable="true">{{item.text}}</div>
+          <div class="text" @blur="update($event,item.id)" contenteditable="true">{{item.text}}</div>
           <p>创建时间：{{item.createdAt|dateFormat}}</p>
           <p>
             <span>重要程度：</span>

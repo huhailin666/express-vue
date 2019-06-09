@@ -13,11 +13,12 @@ router.get('/notes', function(req, res, next) {  //因为前面有api，所以/a
 });
 
 router.post('/notes/add', function(req, res, next){
-  var note = req.body.note;
-  var username = 'xiaoyu';
+  var o = req.body;
+
+  console.log(o)
   //判断完成后，开始创建Note
-  Note.create({text: note, username: username}).then(function(x){
-    res.send({status: 0,id:x.id})
+  Note.create({username:o.username,text:o.text,level:o.level,isFinish:o.isFinish}).then(function(data){
+    res.send({status: 0,data:data})
   }).catch(function(){
     res.send({ status: 1,errorMsg: '数据库异常或者你没有权限'});
   })
@@ -29,10 +30,17 @@ router.post('/notes/edit', function(req, res, next){
   //   return res.send({status: 1, errorMsg: '请先登录'})
   // }
   var noteId = req.body.id;
-  var note = req.body.note;
+  // var note = req.body.note;
+  if(req.body.note){
+    o={text:req.body.note}
+  }else if(req.body.level){
+    o={level:req.body.level}
+  }else{
+    o={isFinish:req.body.isFinish}
+  }
   // var username = req.session.user.username;
   //将文本改为note，条件是where里面的内容
-  Note.update({text: note}, {where:{id: noteId}}).then(function(lists){
+  Note.update(o, {where:{id: noteId}}).then(function(lists){
     // if(lists[0] === 0){
     //   return res.send({ status: 1,errorMsg: '你没有权限'});
     // }
