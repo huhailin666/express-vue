@@ -18,11 +18,12 @@
         <span>小鱼</span>|
         <span class="logout">注销</span>
       </div>
-      <div v-else class="unLogin">
+      <div v-else class="unLogin" >
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-github"></use>
         </svg>
-        <span>GitHub登录</span>
+        <a href="/auth/github">GitHub登录
+        </a>
       </div>
     </div>
     <div id="main">

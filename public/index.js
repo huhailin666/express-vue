@@ -18601,7 +18601,6 @@ exports.default = {
       if (o) {
         _jquery2.default.post("api/notes/add", o).done(function (ret) {
           if (ret.status === 0) {
-            console.log(ret);
             _this4.lists.push(ret.data);
             (0, _toast2.default)('添加成功');
           } else {
@@ -18659,11 +18658,18 @@ exports.default = {
           _this7.lists = ret.data;
         }
       });
+    },
+    toLogin: function toLogin() {
+      var _this8 = this;
+
+      _jquery2.default.get("/auth/github").done(function () {
+        _this8.isLogin = true;
+      });
     }
   },
   data: function data() {
     return {
-      isLogin: true,
+      isLogin: false,
       isAdd: false,
       select: 0,
       lists: [{
@@ -42889,7 +42895,9 @@ var render = function() {
                 [_c("use", { attrs: { "xlink:href": "#icon-github" } })]
               ),
               _vm._v(" "),
-              _c("span", [_vm._v("GitHub登录")])
+              _c("a", { attrs: { href: "/auth/github" } }, [
+                _vm._v("GitHub登录\n      ")
+              ])
             ])
       ]),
       _vm._v(" "),

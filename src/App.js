@@ -134,11 +134,16 @@ export default {
           this.lists = ret.data;
         }
       });
+    },
+    toLogin(){
+      $.get("/auth/github").done(()=>{
+        this.isLogin=true;
+      })
     }
   },
   data: function() {
     return {
-      isLogin: true,
+      isLogin: false,
       isAdd: false,
       select: 0,
       lists: [

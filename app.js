@@ -3,10 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var ejs = require('ejs')
 var indexRouter = require('./routes/index');
 var api = require('./routes/api');
-
+var auth=require('./routes/auth')
 var app = express();
 
 // view engine setup
@@ -22,9 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api', api);  //所有以api开头的请求，都交给api去处理
 //测试路由
-app.use('/haha',function(req,res,next){
-  res.send('haha')
-})
+app.use('/auth', auth); 
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
