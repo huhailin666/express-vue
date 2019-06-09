@@ -66,38 +66,41 @@ export default {
       console.log(el.target.innerText);
       // let text = this.lists[i].text
       // let id =this.lists[i].id
-      // $.post("/api/notes/edit", {
-      //   id: id,
-      //   note: text
-      // }).done(function(ret) {
-      //   if (ret.status === 0) {
-      //     Toast("更新成功");
-      //   } else {
-      //     Toast("更新失败");
-      //   }
-      // });
+      $.post("/api/notes/edit", {
+        id: id,
+        note: text
+      }).done(function(ret) {
+        if (ret.status === 0) {
+          Toast("更新成功");
+        } else {
+          Toast("更新失败");
+        }
+      });
     },
     add() {
       this.isAdd = true;
     },
-    close(i) {
+    close(id) {
       // let id =this.lists[i].id;
-      // this.lists.splice(i, 1);
-      // $.post("/api/notes/delete", { id: id }).done((ret)=> {
-      //   if (ret.status === 0) {
-      //     Toast("删除成功");
-      //   } else {
-      //     console.log(ret.errorMsg);
-      //   }
-      // });
+      $.post("/api/notes/delete", { id: id }).done((ret)=> {
+        if (ret.status === 0) {
+          this.lists.forEach((e,index)=>{//根据 id 找元素，找到后删除
+            if(e.id==id){
+              this.lists.splice(index,1)
+            }
+          })
+          Toast("删除成功");
+        } else {
+          console.log(ret.errorMsg);
+        }
+      });
     },
     getNote() {
-      // $.get("/api/notes").done(ret => {
-      //   if (ret.status == 0) {
-      //     this.lists = ret.data;
-      //   }
-      //   console.log(ret);
-      // });
+      $.get("/api/notes").done(ret => {
+        if (ret.status == 0) {
+          this.lists = ret.data;
+        }
+      });
     }
   },
   data: function() {

@@ -29,11 +29,11 @@
       <ul class="main-container">
         <li class="item" v-for="(item ,index) in choose " :key="index">
           <div class="item-header">
-            <span>{{item.id}}说：</span>
-            <span class="close" @click="close(index)">X</span>
+            <span>{{item.username}}说：</span>
+            <span class="close" @click="close(item.id)">X</span>
           </div>
           <div class="text" @blur="update($event,index)" contenteditable="true">{{item.text}}</div>
-          <p>创建时间：{{item.createdAt}}</p>
+          <p>创建时间：{{item.createdAt|dateFormat}}</p>
           <p>
             <span>重要程度：</span>
             <svg
