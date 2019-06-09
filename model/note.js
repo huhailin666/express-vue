@@ -6,12 +6,13 @@ var sequelize = new Sequelize(undefined,undefined,undefined,{
     storage: path.join(__dirname,'../database/database.sqlite')
 });
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-console.log('sss')
+var Note=sequelize.define('note',{
+  text: {
+    type: Sequelize.STRING,
+  },
+  username: {
+    type: Sequelize.STRING
+  }
+})
+Note.sync()
+module.exports.Note=Note;

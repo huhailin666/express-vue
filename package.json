@@ -15,10 +15,12 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jquery": "^3.4.1",
+    "mint-ui": "^2.2.13",
+    "moment": "^2.24.0",
     "morgan": "~1.9.1",
-    "vue": "^2.6.10",
     "sequelize": "^5.1.0",
-    "sqlite3": "^4.0.6"
+    "sqlite3": "^4.0.6",
+    "vue": "^2.6.10"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
