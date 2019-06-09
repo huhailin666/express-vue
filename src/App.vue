@@ -1,110 +1,64 @@
 <template>
   <div id="app">
-    <div id="add" @click="add">添加</div>
+    <div id="cloak" v-show="isAdd" @click="fanhui"></div>
+    <div id="add" @click="add">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-add"></use>
+      </svg>
+    </div>
     <div id="header">
       <span class="header-title">Sticky-Note</span>
       <ul class="header-button">
-        <li class="all active" @click="toAll">全部</li>
-        <li class="unFinish">未完成</li>
-        <li class="finished">已完成</li>
+        <li class="all" :class="[select==0?'active':'']" @click="toAll">全部</li>
+        <li class="unFinish" :class="[select==1?'active':'']" @click="toUnfinish">未完成</li>
+        <li class="finished" :class="[select==2?'active':'']" @click="toFinished">已完成</li>
       </ul>
-      <div v-if="isLogin" class="login">登录了</div>
-      <div v-else>未登录</div>
+      <div v-if="isLogin" class="login">
+        <img src="https://avatars0.githubusercontent.com/u/44695653?v=4" alt>
+        <span>小鱼</span>|
+        <span class="logout">注销</span>
+      </div>
+      <div v-else class="unLogin">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-github"></use>
+        </svg>
+        <span>GitHub登录</span>
+      </div>
     </div>
     <div id="main">
       <ul class="main-container">
-        <li class="item" v-for="(item ,index) in lists" :key="index">
+        <li class="item" v-for="(item ,index) in choose " :key="index">
           <div class="item-header">
-            <h5>{{item.id}}说：</h5>
+            <span>{{item.id}}说：</span>
             <span class="close" @click="close(index)">X</span>
           </div>
-          <!-- <div class="text" @blur="update(index)" contenteditable="true">{{item.text}}</div> -->
-          <input type="text" class="text" v-model="item.text" @blur="update(index)">
-          <p>创建时间：{{item.createdAt|dateFormat}}</p>
-          <p>重要程度：{{item.level}}</p>
+          <div class="text" @blur="update($event,index)" contenteditable="true">{{item.text}}</div>
+          <p>创建时间：{{item.createdAt}}</p>
+          <p>
+            <span>重要程度：</span>
+            <svg
+              class="icon"
+              aria-hidden="true"
+              v-for="i in 5"
+              :key="i"
+              @click="changeStar(item.id,i)"
+            >
+              <use v-if="i<=item.level" xlink:href="#icon-Starlarge"></use>
+              <use v-else xlink:href="#icon-star"></use>
+            </svg>
+          </p>
+          <span class="finishIt" v-if="!item.isFinish" @click="toChangeFinish(item.id)">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-duiconverted"></use>
+            </svg>
+          </span>
+          <span v-else class="finished" @click="toChangeUnfinish(item.id)">已完成</span>
         </li>
       </ul>
     </div>
-    <add v-show="isAdd"></add>
+    <add v-show="isAdd" @func="fanhui"></add>
   </div>
 </template>
-<script>
-import $ from "jquery";
-import { Toast } from "mint-ui";
-import add from './add.vue'
-export default {
-  name: "App",
-  components:{add},
-  created() {
-    this.getNote();
-  },
-  methods: {
-    update(i) {
-      let text = this.lists[i].text
-      let id =this.lists[i].id
-      $.post("/api/notes/edit", {
-        id: id,
-        note: text
-      }).done(function(ret) {
-        if (ret.status === 0) {
-          Toast("更新成功");
-        } else {
-          Toast("更新失败");
-        }
-      });
-    },
-    add() {
-      this.isAdd=true;
-    },
-    close(i) {
-      let id =this.lists[i].id;
-      this.lists.splice(i, 1);
-      $.post("/api/notes/delete", { id: id }).done((ret)=> {
-        if (ret.status === 0) {
-          Toast("删除成功");
-        } else {
-          console.log(ret.errorMsg);
-        }
-      });
-    },
-    toAll() {
-      Toast("all");
-    },
-    getNote() {
-      $.get("/api/notes").done(ret => {
-        if (ret.status == 0) {
-          this.lists = ret.data;
-        }
-        console.log(ret);
-      });
-    }
-  },
-  data: function() {
-    return {
-      isLogin: false,
-      isAdd:false,
-      lists: [
-        {
-          id: 1,
-          name: "xiaoyu",
-          text: "我爱小海",
-          isFinish: false,
-          time: "2019-05-5",
-          level: 1
-        },
-        {
-          id: 2,
-          name: "xiaoyu",
-          text: "我爱小海",
-          isFinish: false,
-          time: "2019-05-5",
-          level: 1
-        }
-      ]
-    };
-  }
-};
-</script>
-
+<script src="./App.js"></script>
 <style src="./app.less" lang="less"></style>
 
