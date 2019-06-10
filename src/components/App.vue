@@ -33,7 +33,7 @@
             <span>{{item.username}}说：</span>
             <a href="#" class="close" @click="close(item.id)">X</a>
           </div>
-          <div class="text" @blur="update($event,item.id)" contenteditable="true">{{item.text}}</div>
+          <div class="text" @blur="update($event,item.id)"  @click="text=$event.target.innerText" contenteditable="true">{{item.text}}</div>
           <p>创建时间：{{item.createdAt|dateFormat}}</p>
           <p>
             <span>重要程度：</span>

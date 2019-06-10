@@ -114,6 +114,9 @@ export default {
         return;
       }
       let text = el.target.innerText;
+      if(text==this.text){
+        return
+      }
       this.lists.forEach(e => {
         if (e.id == id) {
           this.$set(e, "text", text);
@@ -124,7 +127,7 @@ export default {
         note: text
       }).done(function (ret) {
         if (ret.status === 0) {
-          Toast("更新成功");
+          Toast("修改成功")
         } else {
           Toast("更新失败");
         }
@@ -172,40 +175,8 @@ export default {
       isAdd: false,
       select: 0,
       user: '',
-      lists: [
-        {
-          id: 1,
-          name: "xiaoyu",
-          text: "我爱小海",
-          isFinish: false,
-          createdAt: "2019-05-5",
-          level: 3
-        },
-        {
-          id: 2,
-          name: "xiaoyu",
-          text: "我爱小海",
-          isFinish: false,
-          createdAt: "2019-05-5",
-          level: 2
-        },
-        {
-          id: 3,
-          name: "xiaoyu",
-          text: "我爱小海",
-          isFinish: true,
-          createdAt: "2019-05-5",
-          level: 1
-        },
-        {
-          id: 4,
-          name: "xiaoyu",
-          text: "我爱小海",
-          isFinish: false,
-          createdAt: "2019-05-5",
-          level: 2
-        }
-      ]
+      text:'',
+      lists: []
     };
   }
 };
