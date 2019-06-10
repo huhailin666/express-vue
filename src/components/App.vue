@@ -60,6 +60,6 @@
     <add v-show="isAdd" @func="fanhui"></add>
   </div>
 </template>
-<script src="./App.js"></script>
-<style src="./app.less" lang="less"></style>
+<script src="../js/App.js"></script>
+<style src="../css/app.less" lang="less"></style>
 

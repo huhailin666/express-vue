@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './components/App.vue'
 import axios from 'axios'
 Vue.prototype.$http = axios
 
-import {Toast} from 'mint-ui'
-Vue.component(Toast.name,Toast);
-import 'mint-ui/lib/style.css'
+// import {Toast} from 'mint-ui'
+// Vue.component(Toast.name,Toast);
+// import 'mint-ui/lib/style.css'
 
 import moment from 'moment'
 

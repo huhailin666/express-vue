@@ -1,6 +1,6 @@
 import $ from "jquery";
-import { Toast } from "mint-ui";
-import add from "./add.vue";
+import add from "../components/add.vue";
+var Toast = require('./Toast.js').Toast;
 
 export default {
   name: "App",

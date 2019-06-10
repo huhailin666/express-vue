@@ -44,6 +44,6 @@ export default {
   }
 };
 </script>
-<style src="./add.less" lang="less"></style>
+<style src="../css/add.less" lang="less"></style>
 
   
