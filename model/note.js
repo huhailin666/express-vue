@@ -7,6 +7,9 @@ var sequelize = new Sequelize(undefined,undefined,undefined,{
 });
 
 var Note=sequelize.define('note',{
+  uid:{
+    type:Sequelize.STRING,
+  },
   text: {
     type: Sequelize.STRING,
   },
@@ -21,10 +24,10 @@ var Note=sequelize.define('note',{
   } 
 })
 Note.sync()
-//.then(()=>{
-//   Note.create({ text: "上", username: "天" ,level:3,isFinish:false}).then(jane => {
-//     console.log("Jane's auto-generated ID:", jane.id);
-//   });
+// .then(()=>{
+//   Note.create({uid:'123', text: "非要尝试上", username: "我是小鱼" ,level:3,isFinish:false}).then(jane => {
+//     console.log("Jane's auto-generated ID:");
+//   });  
 // }).then(()=>{
 //   Note.findAll({raw:true}).then(users => {
 //     console.log("All users:", JSON.stringify(users, null, 4));

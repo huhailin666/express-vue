@@ -18537,12 +18537,13 @@ exports.default = {
     }
   },
   methods: {
-    // toLogin(){
-    //   window.location.assign("/auth/github")
-    // },
     toChangeUnfinish: function toChangeUnfinish(id) {
       var _this = this;
 
+      if (!this.isLogin) {
+        (0, _toast2.default)("请先登录");
+        return;
+      }
       _jquery2.default.post("/api/notes/edit", {
         id: id,
         isFinish: false
@@ -18562,6 +18563,10 @@ exports.default = {
     toChangeFinish: function toChangeFinish(id) {
       var _this2 = this;
 
+      if (!this.isLogin) {
+        (0, _toast2.default)("请先登录");
+        return;
+      }
       _jquery2.default.post("/api/notes/edit", {
         id: id,
         isFinish: true
@@ -18581,6 +18586,10 @@ exports.default = {
     changeStar: function changeStar(id, i) {
       var _this3 = this;
 
+      if (!this.isLogin) {
+        (0, _toast2.default)("请先登录");
+        return;
+      }
       _jquery2.default.post("/api/notes/edit", {
         id: id,
         level: i
@@ -18601,6 +18610,10 @@ exports.default = {
       var _this4 = this;
 
       this.isAdd = false;
+      if (!this.isLogin) {
+        (0, _toast2.default)("请先登录");
+        return;
+      }
       if (o) {
         _jquery2.default.post("api/notes/add", o).done(function (ret) {
           if (ret.status === 0) {
@@ -18615,7 +18628,10 @@ exports.default = {
     update: function update(el, id) {
       var _this5 = this;
 
-      console.log(id);
+      if (!this.isLogin) {
+        (0, _toast2.default)("请先登录");
+        return;
+      }
       var text = el.target.innerText;
       this.lists.forEach(function (e) {
         if (e.id == id) {
@@ -18633,12 +18649,13 @@ exports.default = {
         }
       });
     },
-    add: function add() {
-      this.isAdd = true;
-    },
     close: function close(id) {
       var _this6 = this;
 
+      if (!this.isLogin) {
+        (0, _toast2.default)("请先登录");
+        return;
+      }
       _jquery2.default.post("/api/notes/delete", { id: id }).done(function (ret) {
         if (ret.status === 0) {
           _this6.lists.forEach(function (e, index) {
@@ -18763,8 +18780,7 @@ exports.default = {
       var text = document.querySelector("textarea").value;
       var o = {
         text: text,
-        level: this.level,
-        username: "小鱼"
+        level: this.level
       };
       this.$emit("func", o);
     }
@@ -31989,7 +32005,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\nli {\n  text-decoration: none;\n  list-style: none;\n}\n#cloak {\n  position: absolute;\n  top: -20px;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.5);\n}\n#add {\n  position: fixed;\n  right: 100px;\n  bottom: 100px;\n  font-size: 50px;\n  border-radius: 50%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.25), 0 5px 10px rgba(0, 0, 0, 0.22);\n}\n#header {\n  display: flex;\n  top: 0;\n  width: 100%;\n  min-width: 900px;\n  justify-content: space-between;\n  align-items: center;\n  padding: 0 7%;\n  background: #ffffff;\n  height: 50px;\n  position: fixed;\n  color: #00D3AA;\n  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.25), 0 1px 10px rgba(0, 0, 0, 0.22);\n}\n#header .header-title {\n  font-size: 32px;\n  font-family: FZY4JW--GB1-0;\n  color: #808080;\n}\n#header .login {\n  display: flex;\n  align-items: center;\n}\n#header .login img {\n  width: 30px;\n}\n#header .login .logout {\n  background: #00d3aa;\n  color: #fff;\n  margin: 0 5px;\n  padding: 3px 5px;\n  font-size: 16px;\n  border-radius: 4px;\n}\n#header .unLogin {\n  background: #00d3aa;\n  display: flex;\n  justify-items: center;\n  color: #fff;\n  border-radius: 20px;\n  border: 1px solid #00d3aa;\n  padding: 5px 10px;\n}\n#header .unLogin .icon {\n  background: #FFF;\n  border: 1px solid #00d3aa;\n  width: 25px;\n  height: 25px;\n  padding: 2px;\n  border-radius: 50%;\n  z-index: 2;\n}\n#header .header-button {\n  font-size: 18px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n#header .header-button li {\n  margin: 0 50px;\n}\n#header .header-button li.active {\n  color: #00d3aa;\n  border-bottom: 2px solid #999;\n}\n#main {\n  margin: 70px 20px 0 40px;\n}\n#main .main-container {\n  display: flex;\n  flex-wrap: wrap;\n}\n#main .main-container .item {\n  transition: all .5s;\n  width: 230px;\n  border-radius: 4px;\n  background: white;\n  margin: 10px;\n  color: #4D4D4D;\n  padding: 0 20px;\n  border: 1px solid #E6E6E6;\n  padding-bottom: 15px;\n}\n#main .main-container .item:hover .item-header .close {\n  display: inline;\n}\n#main .main-container .item .item-header {\n  padding: 10px 0;\n  display: flex;\n  justify-content: space-between;\n}\n#main .main-container .item .item-header span {\n  color: #808080;\n  font-size: 14px;\n}\n#main .main-container .item .item-header :last-child {\n  display: none;\n}\n#main .main-container .item .text {\n  border: none;\n  border-top: 1px solid #E6E6E6;\n  border-bottom: 1px solid #E6E6E6;\n  min-height: 100px;\n  font-size: 15px;\n}\n#main .main-container .item p {\n  margin: 8px 0;\n  font-size: 14px;\n  color: #4d4d4d;\n}\n#main .main-container .item .finishIt {\n  background: #00d3aa;\n  padding: 0 25px;\n  border-radius: 10px;\n  font-size: 20px;\n}\n#main .main-container .item .finished {\n  display: inline-block;\n  font-size: 16px;\n  padding: 2px 10px;\n  background: #fee82d;\n  color: #fff;\n  border-radius: 10px;\n}\n", ""]);
+exports.push([module.i, "\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n#app {\n  min-height: 100vh;\n  background: #f4f5f5;\n}\nli {\n  list-style: none;\n}\na {\n  text-decoration: none;\n}\n#cloak {\n  position: absolute;\n  top: -20px;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.5);\n}\n#add {\n  position: fixed;\n  right: 100px;\n  bottom: 100px;\n  font-size: 50px;\n  border-radius: 50%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.25), 0 5px 10px rgba(0, 0, 0, 0.22);\n}\n#header {\n  display: flex;\n  top: 0;\n  width: 100%;\n  min-width: 900px;\n  justify-content: space-between;\n  align-items: center;\n  padding: 0 7%;\n  background: #ffffff;\n  height: 50px;\n  position: fixed;\n  color: #00D3AA;\n  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.25), 0 1px 10px rgba(0, 0, 0, 0.22);\n}\n#header .header-title {\n  font-size: 32px;\n  font-family: FZY4JW--GB1-0;\n  color: #808080;\n}\n#header .login {\n  display: flex;\n  align-items: center;\n}\n#header .login img {\n  width: 30px;\n}\n#header .login .logout {\n  background: #00d3aa;\n  color: #fff;\n  margin: 0 5px;\n  padding: 3px 5px;\n  font-size: 16px;\n  border-radius: 4px;\n}\n#header .unLogin {\n  background: #00d3aa;\n  display: flex;\n  justify-items: center;\n  color: #fff;\n  border-radius: 20px;\n  border: 1px solid #00d3aa;\n  padding: 5px 10px;\n}\n#header .unLogin .icon {\n  background: #FFF;\n  border: 1px solid #00d3aa;\n  width: 25px;\n  height: 25px;\n  padding: 2px;\n  border-radius: 50%;\n  z-index: 2;\n}\n#header .header-button {\n  font-size: 18px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n#header .header-button li {\n  margin: 0 50px;\n}\n#header .header-button li.active {\n  color: #00d3aa;\n  border-bottom: 2px solid #999;\n}\n#main {\n  padding: 70px 20px 0 40px;\n}\n#main .main-container {\n  display: flex;\n  flex-wrap: wrap;\n}\n#main .main-container .item {\n  transition: all .5s;\n  width: 230px;\n  border-radius: 4px;\n  background: white;\n  margin: 10px;\n  color: #4D4D4D;\n  padding: 0 20px;\n  border: 1px solid #E6E6E6;\n  padding-bottom: 15px;\n  box-shadow: 12px 14px 12px -6px rgba(0, 0, 0, 0.75);\n}\n#main .main-container .item:hover .item-header .close {\n  display: inline;\n}\n#main .main-container .item .item-header {\n  padding: 10px 0;\n  display: flex;\n  justify-content: space-between;\n  color: #808080;\n  font-size: 14px;\n}\n#main .main-container .item .item-header :last-child {\n  display: none;\n}\n#main .main-container .item .text {\n  border: none;\n  border-top: 1px solid #E6E6E6;\n  border-bottom: 1px solid #E6E6E6;\n  min-height: 100px;\n  font-size: 15px;\n}\n#main .main-container .item p {\n  margin: 8px 0;\n  font-size: 14px;\n  color: #4d4d4d;\n}\n#main .main-container .item .finishIt {\n  background: #00d3aa;\n  padding: 0 25px;\n  border-radius: 10px;\n  font-size: 20px;\n}\n#main .main-container .item .finished {\n  display: inline-block;\n  font-size: 16px;\n  padding: 2px 10px;\n  background: #fee82d;\n  color: #fff;\n  border-radius: 10px;\n}\n", ""]);
 
 // exports
 
@@ -42831,11 +42847,22 @@ var render = function() {
         on: { click: _vm.fanhui }
       }),
       _vm._v(" "),
-      _c("div", { attrs: { id: "add" }, on: { click: _vm.add } }, [
-        _c("svg", { staticClass: "icon", attrs: { "aria-hidden": "true" } }, [
-          _c("use", { attrs: { "xlink:href": "#icon-add" } })
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          attrs: { id: "add" },
+          on: {
+            click: function($event) {
+              _vm.isAdd = "ture"
+            }
+          }
+        },
+        [
+          _c("svg", { staticClass: "icon", attrs: { "aria-hidden": "true" } }, [
+            _c("use", { attrs: { "xlink:href": "#icon-add" } })
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c("div", { attrs: { id: "header" } }, [
         _c("span", { staticClass: "header-title" }, [_vm._v("Sticky-Note")]),
@@ -42889,7 +42916,7 @@ var render = function() {
               _c("img", { attrs: { src: _vm.user.img, alt: "" } }),
               _vm._v(" "),
               _c("span", [_vm._v(_vm._s(_vm.user.username))]),
-              _vm._v("|\n      "),
+              _vm._v(" |\n      "),
               _c(
                 "a",
                 { staticClass: "logout", attrs: { href: "/auth/logout" } },
@@ -42919,9 +42946,10 @@ var render = function() {
                 _c("span", [_vm._v(_vm._s(item.username) + "说：")]),
                 _vm._v(" "),
                 _c(
-                  "span",
+                  "a",
                   {
                     staticClass: "close",
+                    attrs: { href: "#" },
                     on: {
                       click: function($event) {
                         return _vm.close(item.id)
@@ -42985,9 +43013,10 @@ var render = function() {
               _vm._v(" "),
               !item.isFinish
                 ? _c(
-                    "span",
+                    "a",
                     {
                       staticClass: "finishIt",
+                      attrs: { href: "#" },
                       on: {
                         click: function($event) {
                           return _vm.toChangeFinish(item.id)
@@ -43010,9 +43039,10 @@ var render = function() {
                     ]
                   )
                 : _c(
-                    "span",
+                    "a",
                     {
                       staticClass: "finished",
+                      attrs: { href: "#" },
                       on: {
                         click: function($event) {
                           return _vm.toChangeUnfinish(item.id)

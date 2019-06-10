@@ -9,7 +9,7 @@ export default {
     this.getNote();
   },
   computed: {
-    choose: function() {
+    choose: function () {
       if (!this.select) {
         return this.lists;
       } else if (this.select === 2) {
@@ -28,14 +28,15 @@ export default {
     }
   },
   methods: {
-    // toLogin(){
-    //   window.location.assign("/auth/github")
-    // },
     toChangeUnfinish(id) {
+      if (!this.isLogin) {
+        Toast("请先登录")
+        return;
+      }
       $.post("/api/notes/edit", {
         id: id,
         isFinish: false
-      }).done((ret)=> {
+      }).done((ret) => {
         if (ret.status === 0) {
           Toast("更新成功");
         } else {
@@ -49,10 +50,14 @@ export default {
       });
     },
     toChangeFinish(id) {
+      if (!this.isLogin) {
+        Toast("请先登录")
+        return;
+      }
       $.post("/api/notes/edit", {
         id: id,
         isFinish: true
-      }).done((ret)=> {
+      }).done((ret) => {
         if (ret.status === 0) {
           Toast("更新成功");
         } else {
@@ -66,10 +71,14 @@ export default {
       });
     },
     changeStar(id, i) {
+      if (!this.isLogin) {
+        Toast("请先登录")
+        return;
+      }
       $.post("/api/notes/edit", {
         id: id,
         level: i
-      }).done((ret)=> {
+      }).done((ret) => {
         if (ret.status === 0) {
           Toast("更新成功");
         } else {
@@ -84,9 +93,13 @@ export default {
     },
     fanhui(o) {
       this.isAdd = false;
-      if(o){
-        $.post("api/notes/add",o).done((ret)=>{
-          if(ret.status===0){
+      if (!this.isLogin) {
+        Toast("请先登录")
+        return;
+      }
+      if (o) {
+        $.post("api/notes/add", o).done((ret) => {
+          if (ret.status === 0) {
             this.lists.push(ret.data)
             Toast('添加成功')
           } else {
@@ -96,8 +109,11 @@ export default {
       }
     },
     update(el, id) {
-      console.log(id)
-      let text=el.target.innerText;
+      if (!this.isLogin) {
+        Toast("请先登录")
+        return;
+      }
+      let text = el.target.innerText;
       this.lists.forEach(e => {
         if (e.id == id) {
           this.$set(e, "text", text);
@@ -106,7 +122,7 @@ export default {
       $.post("/api/notes/edit", {
         id: id,
         note: text
-      }).done(function(ret) {
+      }).done(function (ret) {
         if (ret.status === 0) {
           Toast("更新成功");
         } else {
@@ -114,15 +130,16 @@ export default {
         }
       });
     },
-    add() {
-      this.isAdd = true;
-    },
     close(id) {
-      $.post("/api/notes/delete", { id: id }).done((ret)=> {
+      if(!this.isLogin){
+        Toast("请先登录")
+        return;
+      }
+      $.post("/api/notes/delete", { id: id }).done((ret) => {
         if (ret.status === 0) {
-          this.lists.forEach((e,index)=>{//根据 id 找元素，找到后删除
-            if(e.id==id){
-              this.lists.splice(index,1)
+          this.lists.forEach((e, index) => {//根据 id 找元素，找到后删除
+            if (e.id == id) {
+              this.lists.splice(index, 1)
             }
           })
           Toast("删除成功");
@@ -135,26 +152,26 @@ export default {
       $.get("/api/notes").done(ret => {
         if (ret.status == 0) {
           this.lists = ret.data;
-          if(ret.user){
-            this.isLogin=true;
-            this.user= ret.user;
+          if (ret.user) {
+            this.isLogin = true;
+            this.user = ret.user;
           }
           console.log(ret)
         }
       });
     },
-    toLogin(){
-      $.get("/auth/github").done(()=>{
-        this.isLogin=true;
+    toLogin() {
+      $.get("/auth/github").done(() => {
+        this.isLogin = true;
       })
     }
   },
-  data: function() {
+  data: function () {
     return {
       isLogin: false,
       isAdd: false,
       select: 0,
-      user:'',
+      user: '',
       lists: [
         {
           id: 1,

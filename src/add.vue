@@ -38,7 +38,6 @@ export default {
       let o = {
         text: text,
         level: this.level,
-        username:"小鱼"
       };
       this.$emit("func", o);
     }

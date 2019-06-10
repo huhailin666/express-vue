@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="cloak" v-show="isAdd" @click="fanhui"></div>
-    <div id="add" @click="add">
+    <div id="add" @click="isAdd='ture'">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-add"></use>
       </svg>
@@ -15,7 +15,7 @@
       </ul>
       <div v-if="isLogin" class="login">
         <img :src="user.img" alt>
-        <span>{{user.username}}</span>|
+        <span>{{user.username}}</span> |
         <a class="logout" href="/auth/logout">注销</a>
       </div>
       <div v-else class="unLogin" >
@@ -31,7 +31,7 @@
         <li class="item" v-for="(item ,index) in choose " :key="index">
           <div class="item-header">
             <span>{{item.username}}说：</span>
-            <span class="close" @click="close(item.id)">X</span>
+            <a href="#" class="close" @click="close(item.id)">X</a>
           </div>
           <div class="text" @blur="update($event,item.id)" contenteditable="true">{{item.text}}</div>
           <p>创建时间：{{item.createdAt|dateFormat}}</p>
@@ -48,12 +48,12 @@
               <use v-else xlink:href="#icon-star"></use>
             </svg>
           </p>
-          <span class="finishIt" v-if="!item.isFinish" @click="toChangeFinish(item.id)">
+          <a href="#" class="finishIt" v-if="!item.isFinish" @click="toChangeFinish(item.id)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-duiconverted"></use>
             </svg>
-          </span>
-          <span v-else class="finished" @click="toChangeUnfinish(item.id)">已完成</span>
+          </a>
+          <a href="#" v-else class="finished" @click="toChangeUnfinish(item.id)">已完成</a>
         </li>
       </ul>
     </div>

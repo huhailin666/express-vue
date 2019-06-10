@@ -5,7 +5,9 @@ var Note = require('../model/note.js').Note
 /* GET users listing. */
 router.get('/notes', function(req, res, next) {  //因为前面有api，所以/api可以不写
   var opts = {raw: true}
-
+  if(req.session && req.session.user){
+    opts.where = {uid:req.session.user.uid }
+  }
   Note.findAll(opts).then(function(notes) {
     if(req.session && req.session.user){
       var user={
@@ -21,14 +23,11 @@ router.get('/notes', function(req, res, next) {  //因为前面有api，所以/a
 });
 
 router.post('/notes/add', function(req, res, next){
-  if(!req.session || !req.session.user){
-    return res.send({status: 1, errorMsg: '请先登录'})
-  }
-
-
+  var username = req.session.user.username;
+  var uid=req.session.user.uid;
   var o = req.body;
   //判断完成后，开始创建Note
-  Note.create({username:o.username,text:o.text,level:o.level,isFinish:o.isFinish}).then(function(data){
+  Note.create({uid:uid,username:username,text:o.text,level:o.level}).then(function(data){
     res.send({status: 0,data:data})
   }).catch(function(){
     res.send({ status: 1,errorMsg: '数据库异常或者你没有权限'});
