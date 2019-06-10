@@ -9,9 +9,9 @@
     <div id="header">
       <span class="header-title">Sticky-Note</span>
       <ul class="header-button">
-        <li class="all" :class="[select==0?'active':'']" @click="select=0">全部</li>
-        <li class="unFinish" :class="[select==1?'active':'']" @click="select=1">未完成</li>
-        <li class="finished" :class="[select==2?'active':'']" @click="select=2">已完成</li>
+        <li class="all" :class="[select==0?'active':'']" @click="select=0"><a href="#">全部</a></li>
+        <li class="unFinish" :class="[select==1?'active':'']" @click="select=1"><a href="#">未完成</a></li>
+        <li class="finished" :class="[select==2?'active':'']" @click="select=2"><a href="#">已完成</a></li>
       </ul>
       <div v-if="isLogin" class="login">
         <img :src="user.img" alt>

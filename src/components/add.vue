@@ -3,7 +3,7 @@
   <div id="creat">
     <div class="title">
       <h1>添加新标签</h1>
-      <span class="close" @click="close">X</span>
+      <a class="close" @click="close">X</a>
     </div>
     <textarea placeholder="输入内容" name="note-content" id="note-content" cols="30" rows="10"></textarea>
     <div class="footer">
@@ -16,7 +16,7 @@
       </p>
     </div>
     <p class="addNote">
-      <span @click="add">添加</span>
+      <a href="#" @click="add">添加</a>
     </p>
   </div>
 </template>
