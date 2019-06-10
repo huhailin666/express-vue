@@ -109,13 +109,13 @@ export default {
       }
     },
     update(el, id) {
-      if (!this.isLogin) {
-        Toast("请先登录")
-        return;
-      }
       let text = el.target.innerText;
       if(text==this.text){
         return
+      }
+      if (!this.isLogin) {
+        Toast("请先登录")
+        return;
       }
       this.lists.forEach(e => {
         if (e.id == id) {
