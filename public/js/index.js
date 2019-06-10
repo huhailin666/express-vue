@@ -5772,11 +5772,11 @@ exports.default = {
       var _this4 = this;
 
       this.isAdd = false;
-      if (!this.isLogin) {
-        Toast("请先登录");
-        return;
-      }
       if (o) {
+        if (!this.isLogin) {
+          Toast("请先登录");
+          return;
+        }
         _jquery2.default.post("api/notes/add", o).done(function (ret) {
           if (ret.status === 0) {
             _this4.lists.push(ret.data);
@@ -42447,7 +42447,7 @@ var render = function() {
       _c(
         "a",
         {
-          attrs: { id: "add" },
+          attrs: { href: "#", id: "add" },
           on: {
             click: function($event) {
               _vm.isAdd = "ture"
