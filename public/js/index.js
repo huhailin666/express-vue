@@ -41766,7 +41766,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n#creat {\n  width: 400px;\n  padding: 20px;\n  position: fixed;\n  top: 20%;\n  left: 50%;\n  transform: translate(-50%);\n  background: #F5F5F5;\n  border-radius: 4px;\n}\n#creat .title {\n  display: flex;\n  justify-content: space-between;\n  justify-items: center;\n  vertical-align: middle;\n}\n#creat .title h1 {\n  color: #666666;\n  font-size: 28px;\n  text-align: center;\n  margin-left: 100px;\n}\n#creat .title .close {\n  margin-top: 10px;\n  font-size: 20px;\n}\n#creat textarea {\n  font-size: 20px;\n  font-family: monospace;\n  border-radius: 5px;\n  background: #F5F5F5;\n  padding: 6px;\n  margin: 10px 0;\n  border-color: #a9a9a9;\n}\n#creat .addNote {\n  text-align: center;\n  margin: 15px auto;\n}\n#creat .addNote a {\n  text-decoration: none;\n  padding: 5px 28px;\n  border-radius: 18px;\n  color: #fff;\n  background: #00d3aa;\n}\n", ""]);
+exports.push([module.i, "\n#creat {\n  width: 400px;\n  padding: 20px;\n  position: fixed;\n  top: 20%;\n  left: 50%;\n  transform: translate(-50%);\n  background: #F5F5F5;\n  border-radius: 4px;\n}\n#creat .title {\n  display: flex;\n  justify-content: space-between;\n  justify-items: center;\n  vertical-align: middle;\n}\n#creat .title h1 {\n  color: #666666;\n  font-size: 28px;\n  text-align: center;\n  margin-left: 100px;\n}\n#creat .title .close {\n  text-decoration: none;\n  margin-top: 10px;\n  font-size: 20px;\n}\n#creat textarea {\n  font-size: 20px;\n  font-family: monospace;\n  border-radius: 5px;\n  background: #F5F5F5;\n  padding: 6px;\n  margin: 10px 0;\n  border-color: #a9a9a9;\n}\n#creat .addNote {\n  text-align: center;\n  margin: 15px auto;\n}\n#creat .addNote a {\n  text-decoration: none;\n  padding: 5px 28px;\n  border-radius: 18px;\n  color: #fff;\n  background: #00d3aa;\n}\n", ""]);
 
 // exports
 
@@ -41784,9 +41784,15 @@ var render = function() {
     _c("div", { staticClass: "title" }, [
       _c("h1", [_vm._v("添加新标签")]),
       _vm._v(" "),
-      _c("span", { staticClass: "close", on: { click: _vm.close } }, [
-        _vm._v("X")
-      ])
+      _c(
+        "a",
+        {
+          staticClass: "close",
+          attrs: { href: "#" },
+          on: { click: _vm.close }
+        },
+        [_vm._v("X")]
+      )
     ]),
     _vm._v(" "),
     _c("textarea", {
@@ -42439,7 +42445,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c(
-        "div",
+        "a",
         {
           attrs: { id: "add" },
           on: {

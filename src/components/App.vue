@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div id="cloak" v-show="isAdd" @click="fanhui"></div>
-    <div id="add" @click="isAdd='ture'">
+    <a href="#" id="add" @click="isAdd='ture'">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-add"></use>
       </svg>
-    </div>
+    </a>
     <div id="header">
       <span class="header-title">Sticky-Note</span>
       <ul class="header-button">

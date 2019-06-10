@@ -93,11 +93,11 @@ export default {
     },
     fanhui(o) {
       this.isAdd = false;
-      if (!this.isLogin) {
-        Toast("请先登录")
-        return;
-      }
       if (o) {
+        if (!this.isLogin) {
+          Toast("请先登录")
+          return;
+        }
         $.post("api/notes/add", o).done((ret) => {
           if (ret.status === 0) {
             this.lists.push(ret.data)
