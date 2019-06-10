@@ -14,9 +14,9 @@
         <li class="finished" :class="[select==2?'active':'']" @click="select=2">已完成</li>
       </ul>
       <div v-if="isLogin" class="login">
-        <img src="https://avatars0.githubusercontent.com/u/44695653?v=4" alt>
-        <span>小鱼</span>|
-        <span class="logout">注销</span>
+        <img :src="user.img" alt>
+        <span>{{user.username}}</span>|
+        <a class="logout" href="/auth/logout">注销</a>
       </div>
       <div v-else class="unLogin" >
         <svg class="icon" aria-hidden="true">

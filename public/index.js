@@ -18537,6 +18537,9 @@ exports.default = {
     }
   },
   methods: {
+    // toLogin(){
+    //   window.location.assign("/auth/github")
+    // },
     toChangeUnfinish: function toChangeUnfinish(id) {
       var _this = this;
 
@@ -18656,6 +18659,11 @@ exports.default = {
       _jquery2.default.get("/api/notes").done(function (ret) {
         if (ret.status == 0) {
           _this7.lists = ret.data;
+          if (ret.user) {
+            _this7.isLogin = true;
+            _this7.user = ret.user;
+          }
+          console.log(ret);
         }
       });
     },
@@ -18672,6 +18680,7 @@ exports.default = {
       isLogin: false,
       isAdd: false,
       select: 0,
+      user: '',
       lists: [{
         id: 1,
         name: "xiaoyu",
@@ -42877,16 +42886,15 @@ var render = function() {
         _vm._v(" "),
         _vm.isLogin
           ? _c("div", { staticClass: "login" }, [
-              _c("img", {
-                attrs: {
-                  src: "https://avatars0.githubusercontent.com/u/44695653?v=4",
-                  alt: ""
-                }
-              }),
+              _c("img", { attrs: { src: _vm.user.img, alt: "" } }),
               _vm._v(" "),
-              _c("span", [_vm._v("小鱼")]),
+              _c("span", [_vm._v(_vm._s(_vm.user.username))]),
               _vm._v("|\n      "),
-              _c("span", { staticClass: "logout" }, [_vm._v("注销")])
+              _c(
+                "a",
+                { staticClass: "logout", attrs: { href: "/auth/logout" } },
+                [_vm._v("注销")]
+              )
             ])
           : _c("div", { staticClass: "unLogin" }, [
               _c(

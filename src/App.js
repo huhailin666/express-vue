@@ -28,6 +28,9 @@ export default {
     }
   },
   methods: {
+    // toLogin(){
+    //   window.location.assign("/auth/github")
+    // },
     toChangeUnfinish(id) {
       $.post("/api/notes/edit", {
         id: id,
@@ -132,6 +135,11 @@ export default {
       $.get("/api/notes").done(ret => {
         if (ret.status == 0) {
           this.lists = ret.data;
+          if(ret.user){
+            this.isLogin=true;
+            this.user= ret.user;
+          }
+          console.log(ret)
         }
       });
     },
@@ -146,6 +154,7 @@ export default {
       isLogin: false,
       isAdd: false,
       select: 0,
+      user:'',
       lists: [
         {
           id: 1,

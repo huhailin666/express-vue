@@ -5,17 +5,28 @@ var Note = require('../model/note.js').Note
 /* GET users listing. */
 router.get('/notes', function(req, res, next) {  //因为前面有api，所以/api可以不写
   var opts = {raw: true}
+
   Note.findAll(opts).then(function(notes) {
-    res.send({status: 0, data: notes});
+    if(req.session && req.session.user){
+      var user={
+        username:req.session.user.username,uid:req.session.user.id,img:req.session.user.avatar
+      }
+      res.send({status: 0, data: notes,user:user });
+    }else{
+      res.send({status: 0, data: notes});
+    }
   }).catch(function(){
     res.send({ status: 1,errorMsg: '数据库异常'});
   });
 });
 
 router.post('/notes/add', function(req, res, next){
-  var o = req.body;
+  if(!req.session || !req.session.user){
+    return res.send({status: 1, errorMsg: '请先登录'})
+  }
 
-  console.log(o)
+
+  var o = req.body;
   //判断完成后，开始创建Note
   Note.create({username:o.username,text:o.text,level:o.level,isFinish:o.isFinish}).then(function(data){
     res.send({status: 0,data:data})

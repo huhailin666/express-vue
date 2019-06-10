@@ -3,6 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport');
+var session = require('express-session');
+
+
 var indexRouter = require('./routes/index');
 var api = require('./routes/api');
 var auth=require('./routes/auth')
@@ -17,6 +21,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//使用session中间件
+app.use(session({secret: 'sessionsecret'}));//这里secret里可以随便写
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/api', api);  //所有以api开头的请求，都交给api去处理
